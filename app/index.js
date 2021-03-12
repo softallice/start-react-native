@@ -68,7 +68,7 @@ const CovidStack = createStackNavigator({
 const MainStack = createBottomTabNavigator(
     {
         Home: HomeStack,
-        Service: ServiceStack,
+        Service: QrScann,
         Chat: CovidStack,
         Setting: SettingStack
     },

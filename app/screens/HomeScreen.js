@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, Text, View, TouchableHighlight, ScrollView } 
 import { Ionicons } from '@expo/vector-icons'
 import { formatDistance } from 'date-fns'
 import { Card, ListItem, Button, Icon, Divider } from 'react-native-elements'
+import QRCode from 'react-native-qrcode-svg';
 
 import app from "../helpers/feathers-client"
 
@@ -13,7 +14,10 @@ function HomeScreen( props) {
                 <Card>
                     <Card.Title>대표 인증 QR</Card.Title>
                     <Card.Divider />
-                    <Card.Image style={{width: 150}} source={require('../assets/images/qrsample.png')} />
+                    <QRCode
+                      value="http://awesome.link.qr"
+                    />
+                    {/* <Card.Image style={{width: 150}} source={require('../assets/images/qrsample.png')} /> */}
                     <Text style={{marginBottom: 10}}>
                     홍길동
                     </Text>
@@ -73,6 +77,7 @@ HomeScreen.navigationOptions = {
         />        
     ),
     headerRightContainerStyle: {
+
         paddingRight: 10
     }
 };
