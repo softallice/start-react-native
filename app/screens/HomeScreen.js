@@ -9,33 +9,34 @@ function HomeScreen(props) {
     const [history, setHistory] = useState([])
 
     useEffect(() => {
-        app.service("audio").find({ query: { $select: ['id', 'file_url', 'description', 'createdAt', 'length'] }})
-          .then(audio => setHistory(audio.data))
+        // app.service("audio").find({ query: { $select: ['id', 'file_url', 'description', 'createdAt', 'length'] }})
+        //   .then(audio => setHistory(audio.data))
 
     }, []);
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                { history.length == 0 ?
+                { 
+                // history.length == 0 ?
                   <View style={{display: 'flex', top: '10%'}}>
-                      <Text style={{fontFamily: 'Avenir-Heavy', fontSize: 16, textAlign: 'center'}}>대표 카드 및 Qr코드 , 서비스 바로가기 추가!</Text>
+                      <Text style={{ fontSize: 16, textAlign: 'center'}}>대표 카드 및 Qr코드 , 서비스 바로가기 추가!</Text>
                   </View>
-                  :
-                  history.map(recording => (
-                        <TouchableHighlight onPress={() => props.navigation.navigate('Replay', { recording })}>
-                            <View style={styles.itemContainer}>
-                                <View style={styles.itemTop}>
-                                    <Text style={{fontSize: 22, fontFamily: "Avenir-Heavy", marginLeft: 15}}>{recording.description}</Text>
-                                    <Text style={{fontSize: 22, fontFamily: "Avenir-Light", marginRight: 15}}>{recording.length}</Text>
-                                </View>
-                                <View style={styles.itemBottom}>
-                                    <Text style={{fontSize: 14, fontFamily: "Avenir", marginLeft: 15}}>{formatDistance(new Date(recording.createdAt), new Date())} ago</Text>
-                                    <Ionicons name="ios-arrow-dropright" size={18} color="#64b5f6" style={{marginRight: 15}} />
-                                </View>
-                            </View>
-                        </TouchableHighlight>
-                      ))
+                //   :
+                //   history.map(recording => (
+                //         <TouchableHighlight onPress={() => props.navigation.navigate('Replay', { recording })}>
+                //             <View style={styles.itemContainer}>
+                //                 <View style={styles.itemTop}>
+                //                     <Text style={{fontSize: 22, fontFamily: "Avenir-Heavy", marginLeft: 15}}>{recording.description}</Text>
+                //                     <Text style={{fontSize: 22, fontFamily: "Avenir-Light", marginRight: 15}}>{recording.length}</Text>
+                //                 </View>
+                //                 <View style={styles.itemBottom}>
+                //                     <Text style={{fontSize: 14, fontFamily: "Avenir", marginLeft: 15}}>{formatDistance(new Date(recording.createdAt), new Date())} ago</Text>
+                //                     <Ionicons name="ios-arrow-dropright" size={18} color="#64b5f6" style={{marginRight: 15}} />
+                //                 </View>
+                //             </View>
+                //         </TouchableHighlight>
+                //       ))
                 }
             </ScrollView>
         </SafeAreaView>

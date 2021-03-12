@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Alert, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, TouchableOpacity as TouchableHighlight } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
+import { Card } from "@paraboly/react-native-card";
 
 import app from "../helpers/feathers-client"
 import * as Font from "expo-font";
@@ -48,6 +49,28 @@ export default class setting extends Component {
         return (
           <SafeAreaView style={styles.container}>
               <LinearGradient colors={['#fff', '#E4E5E6']} style={styles.gradient}>
+                    <Card
+                        iconDisable={true}
+                        title="Title"
+                        onPress={() => { }}
+                        borderRadius={20}
+                        containerHeight={100}
+                        topRightText="50/306"
+                        bottomRightText="30 km"
+                        iconBackgroundColor="#fcd"
+                        textContainerNumberOfLines={3}
+                        description="Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Donec sed odio dui."
+                        topRightTextStyle={{
+                            fontSize: 12,
+                            fontWeight: "700",
+                            color: "#505e80",
+                        }}
+                        bottomRightTextStyle={{
+                            fontSize: 16,
+                            fontWeight: "bold",
+                            color: "#505e80",
+                        }}
+                    />
                   <View style={styles.recordingDataContainer}>
                       <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                           <TouchableHighlight style={styles.deleteButton} onPress={() => this.logOut()}>
