@@ -2,7 +2,8 @@ import React from "react"
 import { Text, View, Button, StyleSheet, TextInput, ScrollView, Dimensions } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from '@react-native-community/async-storage';
-import { dispatchGlobalState, GLOBAL_STATE_ACTIONS } from '../state/GlobalState';
+
+import { dispatchGlobalState, GLOBAL_STATE_ACTIONS, getGlobalState } from '../state/GlobalState';
 import app from "../helpers/feathers-client"
 
 
@@ -19,7 +20,9 @@ class LoginScreen extends React.Component {
 
             newEmail: '',
             newPass: '',
-            passwordConfirmation: ''
+            passwordConfirmation: '',
+
+            profile: getGlobalState('profile')
         }
     }
     _storeData = async (key, value) => {
@@ -73,8 +76,10 @@ class LoginScreen extends React.Component {
         // this._retrieveData('profile')
         // this._retrieveData('auth')
         // this._retrieveAll()
-        this._retrieveData('profile')
-        this._retrieveData('token')
+        // this._retrieveData('profile')
+        // this._retrieveData('token')
+        // console.log(getGlobalState('profile').firstname)
+        console.log(this.state.profile)
         
         return app.authenticate({ strategy: 'local', ...options })
           .then(( r ) => {
@@ -133,7 +138,7 @@ class LoginScreen extends React.Component {
                         marginTop: 10,
                         marginBottom: 10,
                     }}>
-                        Honey Pass
+                        Safety Pass
                     </Text>
                     <View>
                         <Text style={{
@@ -210,7 +215,8 @@ class LoginScreen extends React.Component {
 }
 
 LoginScreen.navigationOptions = {
-  title: "로그인-1"
+  title: "로그인",
+  headerShown: false,
 }
 
 export default LoginScreen

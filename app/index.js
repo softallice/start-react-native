@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Loading from "./screens/LoadingScreen";
 import Login from "./screens/LoginScreen";
 import Home from "./screens/HomeScreen";
-import ReplayPage from "./screens/Replay";
+import Covid from "./screens/CovidScreen";
 import Service from "./screens/ServiceScreen";
 import Setting from "./screens/SettingScreen";
 import QrScann from "./screens/QrScannScreen"
@@ -44,8 +44,7 @@ const ServiceStack = createStackNavigator({
 });
 
 const HomeStack = createStackNavigator({
-    Home: Home,
-    Replay: ReplayPage
+    Home: Home
 });
 
 const ChatStack = createStackNavigator({
@@ -60,13 +59,17 @@ const SettingStack = createStackNavigator({
     Setting: Setting
 });
 
+const CovidStack = createStackNavigator({
+    Covid: Covid
+});
+
 
 
 const MainStack = createBottomTabNavigator(
     {
         Home: HomeStack,
         Service: ServiceStack,
-        Chat: QrScannStack,
+        Chat: CovidStack,
         Setting: SettingStack
     },
     {
@@ -85,9 +88,12 @@ const MainStack = createBottomTabNavigator(
     }
 );
 
-const AuthStack = createStackNavigator({
-    Login: Login
-})
+const AuthStack = createStackNavigator(
+    {
+        Login: Login
+    },
+    
+)
 
 const RootStack = createSwitchNavigator(
     {

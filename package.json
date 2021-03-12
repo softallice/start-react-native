@@ -14,8 +14,6 @@
     "@feathersjs/feathers": "^4.5.11",
     "@feathersjs/rest-client": "^4.5.11",
     "@feathersjs/socketio-client": "^4.5.11",
-    "@freakycoder/react-native-bounceable": "^0.2.4",
-    "@paraboly/react-native-card": "Paraboly/react-native-card",
     "@react-native-community/async-storage": "^1.12.1",
     "axios": "^0.21.1",
     "axios-hooks": "^2.4.1",

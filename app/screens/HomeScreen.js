@@ -2,48 +2,79 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, Text, View, TouchableHighlight, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { formatDistance } from 'date-fns'
+import { Card, ListItem, Button, Icon, Divider } from 'react-native-elements'
 
 import app from "../helpers/feathers-client"
 
-function HomeScreen(props) {
-    const [history, setHistory] = useState([])
-
-    useEffect(() => {
-        // app.service("audio").find({ query: { $select: ['id', 'file_url', 'description', 'createdAt', 'length'] }})
-        //   .then(audio => setHistory(audio.data))
-
-    }, []);
-
+function HomeScreen( props) {
     return (
         <SafeAreaView style={styles.container}>
+            <View>
+                <Card>
+                    <Card.Title>대표 인증 QR</Card.Title>
+                    <Card.Divider />
+                    <Card.Image style={{width: 150}} source={require('../assets/images/qrsample.png')} />
+                    <Text style={{marginBottom: 10}}>
+                    홍길동
+                    </Text>
+                </Card>
+            </View>
             <ScrollView>
-                { 
-                // history.length == 0 ?
                   <View style={{display: 'flex', top: '10%'}}>
                       <Text style={{ fontSize: 16, textAlign: 'center'}}>대표 카드 및 Qr코드 , 서비스 바로가기 추가!</Text>
                   </View>
-                //   :
-                //   history.map(recording => (
-                //         <TouchableHighlight onPress={() => props.navigation.navigate('Replay', { recording })}>
-                //             <View style={styles.itemContainer}>
-                //                 <View style={styles.itemTop}>
-                //                     <Text style={{fontSize: 22, fontFamily: "Avenir-Heavy", marginLeft: 15}}>{recording.description}</Text>
-                //                     <Text style={{fontSize: 22, fontFamily: "Avenir-Light", marginRight: 15}}>{recording.length}</Text>
-                //                 </View>
-                //                 <View style={styles.itemBottom}>
-                //                     <Text style={{fontSize: 14, fontFamily: "Avenir", marginLeft: 15}}>{formatDistance(new Date(recording.createdAt), new Date())} ago</Text>
-                //                     <Ionicons name="ios-arrow-dropright" size={18} color="#64b5f6" style={{marginRight: 15}} />
-                //                 </View>
-                //             </View>
-                //         </TouchableHighlight>
-                //       ))
-                }
+                  <Card>
+                    <Card.Title>스크롤 뷰</Card.Title>
+                    <Card.Divider />
+                    <Card.Image source={require('../assets/images/addresscard.png')}>
+                        
+                    </Card.Image>
+                    <Text style={{marginBottom: 10}}>
+                    qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                    </Text>
+                </Card>
+                  <Card>
+                    <Card.Title>스크롤 뷰</Card.Title>
+                    <Card.Divider />
+                    <Card.Image source={require('../assets/images/addresscard.png')}>
+                        
+                    </Card.Image>
+                    <Text style={{marginBottom: 10}}>
+                    qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                    </Text>
+                </Card>
+                  <Card>
+                    <Card.Title>스크롤 뷰</Card.Title>
+                    <Card.Divider />
+                    <Card.Image source={require('../assets/images/addresscard.png')}>
+                        
+                    </Card.Image>
+                    <Text style={{marginBottom: 10}}>
+                    qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                    </Text>
+                </Card>
             </ScrollView>
         </SafeAreaView>
     )
 }
 HomeScreen.navigationOptions = {
-    title: "Honey PASS"
+    title: "Safety Pass",
+    headerRight: () => (
+        <Button
+            onPress={() => alert('This is a button!')}//props.navigation.navigate("QrScann")}
+            icon={
+                <Icon
+                    name="qr-code-scanner"
+                    size={20}
+                    color="black"
+                />
+            }
+            type="clear"
+        />        
+    ),
+    headerRightContainerStyle: {
+        paddingRight: 10
+    }
 };
 
 const styles = StyleSheet.create({

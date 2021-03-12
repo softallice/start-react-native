@@ -1,15 +1,42 @@
 import React, { Component } from "react";
 import { Alert, SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, TouchableOpacity as TouchableHighlight } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity as TouchableHighlight, Image , ScrollView } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
-import { Card } from "@paraboly/react-native-card";
+import { Card, ListItem, Button, Icon, Divider } from 'react-native-elements'
 
-import app from "../helpers/feathers-client"
 import * as Font from "expo-font";
+import { dispatchGlobalState, GLOBAL_STATE_ACTIONS, getGlobalState } from '../state/GlobalState';
+import app from "../helpers/feathers-client"
+
+
+
+const list = [
+    {
+      title: '백업하기',
+      icon: 'backup'
+    },
+    {
+      title: '인증 비밀번호 재설정',
+      icon: 'lock-open'
+    },
+    {
+      title: '알림설정',
+      icon: 'messenger-outline'
+    },
+    {
+      title: '앱잠금 설정',
+      icon: 'lock'
+    },
+  ]
+
+//   const [profile] = getGlobalState('profile');
 
 export default class setting extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            profile: getGlobalState('profile')
+        }
     }
 
     componentDidMount() {
@@ -21,9 +48,12 @@ export default class setting extends Component {
             })
         })()
     }
-
+   
+    
     logOut = () => {
         this.setState({ isLoading: false });
+        console.log("profile--> logout")
+        console.log(this.state.profile)
         return Alert.alert(
             "로그 아웃",
             "정말 로그아웃 하시겠습니까?",
@@ -38,6 +68,7 @@ export default class setting extends Component {
                     onPress: () => {
                         app.logout()
                           .then(() => this.props.navigation.navigate("Login"))
+                          dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.LOGOUT })
                     }
                 }
             ],
@@ -47,44 +78,54 @@ export default class setting extends Component {
 
     render() {
         return (
-          <SafeAreaView style={styles.container}>
-              <LinearGradient colors={['#fff', '#E4E5E6']} style={styles.gradient}>
-                    <Card
-                        iconDisable={true}
-                        title="Title"
-                        onPress={() => { }}
-                        borderRadius={20}
-                        containerHeight={100}
-                        topRightText="50/306"
-                        bottomRightText="30 km"
-                        iconBackgroundColor="#fcd"
-                        textContainerNumberOfLines={3}
-                        description="Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Donec sed odio dui."
-                        topRightTextStyle={{
-                            fontSize: 12,
-                            fontWeight: "700",
-                            color: "#505e80",
-                        }}
-                        bottomRightTextStyle={{
-                            fontSize: 16,
-                            fontWeight: "bold",
-                            color: "#505e80",
-                        }}
-                    />
-                  <View style={styles.recordingDataContainer}>
-                      <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                          <TouchableHighlight style={styles.deleteButton} onPress={() => this.logOut()}>
-                              {/* <Text style={{color: '#ffffff', fontFamily: 'Avenir-Heavy', fontSize: 16}}> LOG OUT </Text> */}
-                              <Text style={{color: '#ffffff',  fontSize: 16}}> LOG OUT </Text>
-                          </TouchableHighlight>
-                          
-                      </View>
-                  </View>
-              </LinearGradient>
-          </SafeAreaView>
+            <SafeAreaView style={styles.container}>
+                <LinearGradient colors={['#fff', '#E4E5E6']} style={styles.gradient}>
+                    <View>
+                        <Card>
+                            <Card.Title>{this.state.profile.firstname}</Card.Title>
+                            <Card.Divider />
+                            <Card.Image source={require('../assets/images/addresscard.png')}>
+                                
+                            </Card.Image>
+                            <Text style={{marginBottom: 10}}>
+                            DID : {this.state.profile.did.did1}
+                            </Text>
+                            <Text style={{marginBottom: 10}}>
+                            qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                            </Text>
+                        </Card>
+                        <Divider style={{height: 10 }} />
+                        <View>
+                        {
+                            list.map((item, i) => (
+                            <ListItem key={i} bottomDivider>
+                                <Icon name={item.icon} />
+                                <ListItem.Content>
+                                <ListItem.Title>{item.title}</ListItem.Title>
+                                </ListItem.Content>
+                                <ListItem.Chevron />
+                            </ListItem>
+                            ))
+                        }
+                        </View>
+                    </View>
+                    
+                    <View style={styles.recordingDataContainer}>
+                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableHighlight style={styles.deleteButton} onPress={() => this.logOut()}>
+                                {/* <Text style={{color: '#ffffff', fontFamily: 'Avenir-Heavy', fontSize: 16}}> LOG OUT </Text> */}
+                                <Text style={{ color: '#ffffff', fontSize: 16 }}> LOG OUT </Text>
+                            </TouchableHighlight>
+
+                        </View>
+                    </View>
+                </LinearGradient>
+            </SafeAreaView>
         );
     }
 }
+
+
 setting.navigationOptions = {
     title: "더보기"
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Loading from "./app/screens/load/Loading";
-import Main from "./app/index";
+import Main from "./app/Index";
   
 export default class extends React.Component{
   state={
