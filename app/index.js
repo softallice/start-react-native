@@ -6,12 +6,17 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Loading from "./screens/LoadingScreen";
 import Login from "./screens/LoginScreen";
+import SignUp from "./screens/SignUpScreen"
 import Home from "./screens/HomeScreen";
 import Covid from "./screens/CovidScreen";
 import Service from "./screens/ServiceScreen";
 import Setting from "./screens/SettingScreen";
 import QrScann from "./screens/QrScannScreen"
-import ResultPage from "./screens/ResultPage";
+import PinCode from "./screens/pincode/PinCodeScreen"
+import ConfirmPin from "./screens/pincode/ConfirnmPinScreen"
+import BioAuth from "./screens/bioauth/BioAuthScreen"
+import { disableExpoCliLogging } from "expo/build/logs/Logs";
+
 
 
 // import IntroPage from "./app/screens/intro/IntroScreen"
@@ -29,22 +34,26 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
         case "Chat":
             iconName = "ios-chatbubbles-sharp";
             break;
+        case "QR":
+            iconName = "qr-code-sharp";
+            break;
         case "Setting":
             iconName = "ellipsis-horizontal";
             break;
     }
 
-    return <Ionicons name={iconName} size={25} color={tintColor} />;
+    return <Ionicons name={iconName} size={24} color={tintColor} />;
 };
 
 //헤더 제어 
 const ServiceStack = createStackNavigator({
     Service: Service, //첫번째
-    Result: ResultPage //두번째
+    QR: QrScann //두번째
 });
 
 const HomeStack = createStackNavigator({
-    Home: Home
+    Home: Home,
+    QR: QrScann //두번째
 });
 
 const ChatStack = createStackNavigator({
@@ -63,13 +72,19 @@ const CovidStack = createStackNavigator({
     Covid: Covid
 });
 
+// const PinCodeStack = createStackNavigator({
+    
+    
+// });
+
 
 
 const MainStack = createBottomTabNavigator(
     {
         Home: HomeStack,
-        Service: QrScann,
+        Service: ServiceStack,
         Chat: CovidStack,
+        QR: QrScannStack,
         Setting: SettingStack
     },
     {
@@ -90,7 +105,10 @@ const MainStack = createBottomTabNavigator(
 
 const AuthStack = createStackNavigator(
     {
-        Login: Login
+        Login: Login,
+        SignUp: SignUp,
+        PinCode: PinCode,
+        ConfirmPin: ConfirmPin
     },
     
 )

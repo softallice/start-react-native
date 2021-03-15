@@ -1,8 +1,8 @@
 import React from "react"
-import { Text, View, Button, StyleSheet, TextInput, ScrollView, Dimensions } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AsyncStorage from '@react-native-community/async-storage';
-
+import { Text, View, Button, StyleSheet, TextInput, ScrollView, Dimensions, TouchableOpacity , Image} from "react-native"
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+// import AsyncStorage from '@react-native-community/async-storage';
+import { Feather } from "@expo/vector-icons";
 import { dispatchGlobalState, GLOBAL_STATE_ACTIONS, getGlobalState } from '../state/GlobalState';
 import app from "../helpers/feathers-client"
 
@@ -22,85 +22,44 @@ class LoginScreen extends React.Component {
             newPass: '',
             passwordConfirmation: '',
 
-            profile: getGlobalState('profile')
+            profile: getGlobalState('profile'),
+            userinfo: getGlobalState('userinfo'),
+            passwordSecurity: true,
         }
+    }   
+
+  componentDidMount = async () => {
+    console.log(this.state.userinfo)
+    if (this.state.userinfo) {
+      this.authenticate(this.state.userinfo)
+    } else {
+      console.log("로그인 필수")
     }
-    _storeData = async (key, value) => {
-        try {
-          await AsyncStorage.setItem(
-            key,
-            value
-          );
-        } catch (error) {
-          // Error saving data
-        }
-      };
-    
-      _retrieveData = async (key) => {
-        try {
-          const value = await AsyncStorage.getItem(key);
-          if (value !== null) {
-            // We have data!!
-            console.log(value);
-          }
-        } catch (error) {
-          // Error retrieving data
-        }
-      };  
-
-      _retrieveAll = async () => {
-        try {
-          const value = await AsyncStorage.getAllKeys();
-          if (value !== null) {
-            // We have data!!
-            console.log(value);
-          }
-        } catch (error) {
-          // Error retrieving data
-        }
-      };  
-
-      _storeClear = async () => {
-        try {
-          await AsyncStorage.clear();
-        } catch (error) {
-          // Error retrieving data
-        }
-      };  
+  }
     
     authenticate = (options) => {
-        console.log("Authentication Attempt")
-        // AsyncStorage.setItem('profile','1111')
-        // console.log('test' ,AsyncStorage.getItem('profile'))
-        // this._storeData('test','aaaaaaa')
-        // this._retrieveData('profile')
-        // this._retrieveData('auth')
-        // this._retrieveAll()
-        // this._retrieveData('profile')
-        // this._retrieveData('token')
-        // console.log(getGlobalState('profile').firstname)
-        console.log(this.state.profile)
-        
-        return app.authenticate({ strategy: 'local', ...options })
-          .then(( r ) => {
-              console.log("Authentication Success")
-            //   this._storeData('userInfo',JSON.stringify({
-            //                         "firstName": response.user.firstname,
-            //                         "lastName": response.user.lastName,
-            //                         "email": response.user.email
-            //                     }))
-            //   this._retrieveData('userInfo')
-              dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.TOKEN, state: r.accessToken })
-              dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.PROFILE, state: r.user })
-              this.setState({ isAuthenticated: true })
-            //   app.get('token')
-              this.props.navigation.navigate("Home")
-          })
-          .catch((err) => {
-              console.log("LoginScreen: API call failed: ", err)
-              this.setState({ isAuthenticated: false })
-            }
-          )
+      console.log("Authentication Attempt")
+      return app.authenticate({ strategy: 'local', ...options })
+        .then(( r ) => {
+            console.log("Authentication Success")
+          //   this._storeData('userInfo',JSON.stringify({
+          //                         "firstName": response.user.firstname,
+          //                         "lastName": response.user.lastName,
+          //                         "email": response.user.email
+          //                     }))
+          //   this._retrieveData('userInfo')
+            dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.TOKEN, state: r.accessToken })
+            dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.PROFILE, state: r.user })
+            dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.USERINFO, state: options })
+            this.setState({ isAuthenticated: true })
+          //   app.get('token')
+            this.props.navigation.navigate("Home")
+        })
+        .catch((err) => {
+            console.log("LoginScreen: API call failed: ", err)
+            this.setState({ isAuthenticated: false })
+          }
+        )
     }
 
     handleRegisterUser = () => {
@@ -117,99 +76,98 @@ class LoginScreen extends React.Component {
     }
 
     render() {
-        const { email, password, newEmail, newPass, passwordConfirmation } = this.state
+        const { email, password } = this.state
         return (
-          <KeyboardAwareScrollView>
-              <ScrollView>
-                <View
-                  style={{
-                      top: -50,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      height: DEVICE_HEIGHT,
-                      width: DEVICE_WIDTH
-                  }}
-                >
-                    <Text style={{
-                        fontSize: 28,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        marginTop: 10,
-                        marginBottom: 10,
-                    }}>
-                        Safety Pass
-                    </Text>
-                    <View>
-                        <Text style={{
-                            fontSize: 16,
-                            fontWeight: '100',
-                        }}>
-                            계정 생성은 조금 후에....
-                        </Text>
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Email"
-                        autoCapitalize="none"
-                        onChangeText={(email) => this.setState({ email })}
-                        value={email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        secureTextEntry={true}
-                        placeholder="Password"
-                        autoCapitalize="none"
-                        onChangeText={(password) => this.setState({ password })}
-                        value={password}
-                    />
-                    <View style={{width: '30%'}}>
-                        <Button style={{width: '100px'}} onPress={() => this.authenticate({ email: email, password: password })} title="Login" />
-                    </View>
-                    {/*<View style={{*/}
-                        {/*marginTop: 15,*/}
-                        {/*marginBottom: 15,*/}
-                        {/*fontSize: 22,*/}
-                        {/*fontWeight: '100',*/}
-                        {/*textAlign: 'center'*/}
-                    {/*}}>*/}
-                        {/*<Text>OR</Text>*/}
-                    {/*</View>*/}
-                    {/*<Text style={{*/}
-                        {/*fontSize: 16,*/}
-                        {/*fontWeight: '100',*/}
-                    {/*}}>*/}
-                        {/*Register as a new user*/}
-                    {/*</Text>*/}
-                    {/*<TextInput*/}
-                      {/*style={styles.input}*/}
-                      {/*placeholder="Email"*/}
-                      {/*autoCapitalize="none"*/}
-                      {/*onChangeText={(newEmail) => this.setState({ newEmail })}*/}
-                      {/*value={newEmail}*/}
-                    {/*/>*/}
-                    {/*<TextInput*/}
-                      {/*style={styles.input}*/}
-                      {/*secureTextEntry={true}*/}
-                      {/*placeholder="Password"*/}
-                      {/*autoCapitalize="none"*/}
-                      {/*onChangeText={(newPass) => this.setState({ newPass })}*/}
-                      {/*value={newPass}*/}
-                    {/*/>*/}
-                    {/*<TextInput*/}
-                      {/*style={styles.input}*/}
-                      {/*secureTextEntry={true}*/}
-                      {/*placeholder="Password"*/}
-                      {/*autoCapitalize="none"*/}
-                      {/*onChangeText={(passwordConfirmation) => this.setState({ passwordConfirmation })}*/}
-                      {/*value={passwordConfirmation}*/}
-                    {/*/>*/}
-                    {/*<View style={{width: '30%'}}>*/}
-                        {/*<Button style={{width: '100px'}} onPress={this.handleRegisterUser} title="Sign Up" />*/}
-                    {/*</View>*/}
+          <View style={styles.container}>
+            <Text style={styles.loginTitle}>Welcome!</Text>
+            <Image
+              source={require("../assets/images/welcome.png")}
+              style={{
+                width: "95%",
+                height: 200,
+                alignSelf: "center",
+                marginTop: 100,
+              }}
+            />
+            <ScrollView>
+              <View
+                style={{
+                  width: "100%",
+                  backgroundColor: "white",
+                  borderTopRightRadius: 30,
+                  borderTopLeftRadius: 30,
+                }}
+              >
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(email) => this.setState({ email })}
+                    value={email}
+                    autoCapitalize="none"
+                    placeholder="Email"
+                    placeholderTextColor="#3D4C63"
+                  />
                 </View>
-              </ScrollView>
-          </KeyboardAwareScrollView>
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor="#3D4C63"
+                    secureTextEntry={this.state.passwordSecurity}
+                    autoCapitalize="none"
+                    onChangeText={(password) => this.setState({ password })}
+                    value={password}
+                  />
+                  {this.state.passwordSecurity === true ? (
+                    <Feather
+                      name="eye"
+                      size={24}
+                      color="black"
+                      onPress={() => this.setState({ passwordSecurity: false })}
+                    />
+                  ) : (
+                    <Feather
+                      name="eye-off"
+                      size={24}
+                      color="black"
+                      onPress={() => this.setState({ passwordSecurity: true })}
+                    />
+                  )}
+                </View>
+                {/* <Text style={styles.forgotLink} onPress={() => this.props.navigation.navigate("forgatPassword")} >Forgot your Password?</Text> */}
+                <View style={styles.bottomView}>
+                  <TouchableOpacity
+                    style={styles.walletBtn}
+                    // onPress={() => this.props.navigation.navigate("verifyPincode")} 핀번호 체크 후 로그인 처리
+                    onPress={() => this.authenticate({ email: email, password: password })}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: 18,
+                      }}
+                    >
+                      Login
+                </Text>
+                  </TouchableOpacity>
+                  <View style={styles.signupView}>
+                    <Text style={{ color: "#485068" }}>회원 가입 </Text>
+                    <TouchableOpacity
+                      style={{ marginLeft: "2%" }}
+                      onPress={() => this.props.navigation.navigate("PinCode")}
+                      // onPress={() => this.props.navigation.navigate("SignUp")}
+                    >
+                      <Text style={{ color: "#347AF0", fontWeight: "700" }}>
+                        Sign Up
+                  </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </View>
         )
     }
 }
@@ -222,20 +180,54 @@ LoginScreen.navigationOptions = {
 export default LoginScreen
 
 const styles = StyleSheet.create({
-    input: {
-        margin: 8,
-        height: 40,
-        width: 230,
-        borderColor: "steelblue",
-        borderWidth: 1,
-        paddingLeft: 15
-    },
-    submitButton: {
-        padding: 10,
-        margin: 15,
-        height: 40
-    },
-    submitButtonText: {
-        color: "white"
-    }
-})
+  container: {
+    flex: 1,
+    // alignItems: "center",
+    backgroundColor: "#F2F2F2",
+  },
+  loginTitle: {
+    top: 70,
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#0D1F3C",
+    textAlign: "center",
+  },
+  inputView: {
+    width: "89%",
+    borderBottomWidth: 1,
+    borderBottomColor: "#CFD2D8",
+    alignSelf: "center",
+    flexDirection: "row",
+    marginTop: 40,
+  }, 
+  input: {
+    width: "90%",
+    fontSize: 20,
+    padding: "3%",
+  },
+  forgotLink: {
+    width: "89%",
+    alignSelf: "center",
+    textAlign: "right",
+    marginTop: 6,
+    color: "#347AF0",
+  },
+  bottomView: {
+    marginTop: 110,
+  },
+  walletBtn: {
+    backgroundColor: "#347AF0",
+    textAlign: "center",
+    width: "70%",
+    alignSelf: "center",
+    padding: 13,
+    borderRadius: 50,
+  },
+  signupView: {
+    flexDirection: "row",
+    textAlign: "center",
+    alignSelf: "center",
+    marginTop: 20,
+    paddingBottom: 28,
+  },
+});

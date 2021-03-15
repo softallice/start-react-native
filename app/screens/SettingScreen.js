@@ -88,7 +88,8 @@ export default class setting extends Component {
                                 
                             </Card.Image>
                             <Text style={{marginBottom: 10}}>
-                            DID : {this.state.profile.did.did1}
+                            {/* DID :{this.state.profile.did.did1} */}
+                            DID :
                             </Text>
                             <Text style={{marginBottom: 10}}>
                             qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분

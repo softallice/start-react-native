@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, Text, View, TouchableHighlight, ScrollView } from "react-native";
-import { Ionicons } from '@expo/vector-icons'
-import { formatDistance } from 'date-fns'
 
 import app from "../helpers/feathers-client"
 

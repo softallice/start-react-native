@@ -7,65 +7,71 @@ import QRCode from 'react-native-qrcode-svg';
 
 import app from "../helpers/feathers-client"
 
-function HomeScreen( props) {
-    return (
-        <SafeAreaView style={styles.container}>
-            <View>
-                <Card>
-                    <Card.Title>대표 인증 QR</Card.Title>
-                    <Card.Divider />
-                    <QRCode
-                      value="http://awesome.link.qr"
-                    />
-                    {/* <Card.Image style={{width: 150}} source={require('../assets/images/qrsample.png')} /> */}
-                    <Text style={{marginBottom: 10}}>
-                    홍길동
-                    </Text>
-                </Card>
-            </View>
-            <ScrollView>
-                  <View style={{display: 'flex', top: '10%'}}>
-                      <Text style={{ fontSize: 16, textAlign: 'center'}}>대표 카드 및 Qr코드 , 서비스 바로가기 추가!</Text>
-                  </View>
-                  <Card>
-                    <Card.Title>스크롤 뷰</Card.Title>
-                    <Card.Divider />
-                    <Card.Image source={require('../assets/images/addresscard.png')}>
-                        
-                    </Card.Image>
-                    <Text style={{marginBottom: 10}}>
-                    qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
-                    </Text>
-                </Card>
-                  <Card>
-                    <Card.Title>스크롤 뷰</Card.Title>
-                    <Card.Divider />
-                    <Card.Image source={require('../assets/images/addresscard.png')}>
-                        
-                    </Card.Image>
-                    <Text style={{marginBottom: 10}}>
-                    qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
-                    </Text>
-                </Card>
-                  <Card>
-                    <Card.Title>스크롤 뷰</Card.Title>
-                    <Card.Divider />
-                    <Card.Image source={require('../assets/images/addresscard.png')}>
-                        
-                    </Card.Image>
-                    <Text style={{marginBottom: 10}}>
-                    qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
-                    </Text>
-                </Card>
-            </ScrollView>
-        </SafeAreaView>
-    )
+export default class HomeScreen extends React.Component {
+    constructor(props) {
+      super(props)
+    }
+    render() {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View>
+                    <Card>
+                        <Card.Title>대표 인증 QR</Card.Title>
+                        <Card.Divider />
+                        <QRCode
+                        value="http://awesome.link.qr"
+                        />
+                        {/* <Card.Image style={{width: 150}} source={require('../assets/images/qrsample.png')} /> */}
+                        <Text style={{marginBottom: 10}}>
+                        홍길동
+                        </Text>
+                    </Card>
+                </View>
+                <ScrollView>
+                    <View style={{display: 'flex', top: '10%'}}>
+                        <Text style={{ fontSize: 16, textAlign: 'center'}}>대표 카드 및 Qr코드 , 서비스 바로가기 추가!</Text>
+                    </View>
+                    <Card>
+                        <Card.Title>스크롤 뷰</Card.Title>
+                        <Card.Divider />
+                        <Card.Image source={require('../assets/images/addresscard.png')}>
+                            
+                        </Card.Image>
+                        <Text style={{marginBottom: 10}}>
+                        qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                        </Text>
+                    </Card>
+                    <Card>
+                        <Card.Title>스크롤 뷰</Card.Title>
+                        <Card.Divider />
+                        <Card.Image source={require('../assets/images/addresscard.png')}>
+                            
+                        </Card.Image>
+                        <Text style={{marginBottom: 10}}>
+                        qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                        </Text>
+                    </Card>
+                    <Card>
+                        <Card.Title>스크롤 뷰</Card.Title>
+                        <Card.Divider />
+                        <Card.Image source={require('../assets/images/addresscard.png')}>
+                            
+                        </Card.Image>
+                        <Text style={{marginBottom: 10}}>
+                        qr 코드 이미지 생성 및 DID, 사용자 이름 등 표시하는 부분
+                        </Text>
+                    </Card>
+                </ScrollView>
+            </SafeAreaView>
+        )
+    }
 }
+
 HomeScreen.navigationOptions = {
     title: "Safety Pass",
     headerRight: () => (
         <Button
-            onPress={() => alert('This is a button!')}//props.navigation.navigate("QrScann")}
+            onPress={() => alert("QrScann")}
             icon={
                 <Icon
                     name="qr-code-scanner"
@@ -113,4 +119,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeScreen;
