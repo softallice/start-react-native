@@ -97,7 +97,7 @@ const MainStack = createBottomTabNavigator(
             activeTintColor: "tomato",
             inactiveTintColor: "gray",
             style: {
-                borderTopColor: 'transparent'
+                borderTopColor: 'gray'
             }
         }
     }

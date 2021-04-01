@@ -5941,10 +5941,12 @@ react-native-material-textfield@vishaljadav24/react-native-material-textfield:
   dependencies:
     prop-types "^15.5.9"
 
-react-native-pin-view@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-pin-view/-/react-native-pin-view-3.0.2.tgz#cc233c4b7da7f69ad3817b631e3e7f2a14198e0d"
-  integrity sha512-6lu/TCRgT7SjFPLdb7nCScAgJPLeeUU3k3qBoqn3oz8eTOUKcZnT4lWm22z5V+OLreL6BDCz7xFzvOLwUoI3ow==
+react-native-pin-view@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-pin-view/-/react-native-pin-view-3.0.0.tgz#a8d3326f97267838f4973114fca668a91f5ba442"
+  integrity sha512-6REScMNTIjhdRs7JUe1wbpz19OM4BcpLRI3w/WIvNCWyLppZlUOE4qne5jsQziUefN5vFlvxyiT4NwrNgQy1Ig==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-qrcode-svg@^6.1.1:
   version "6.1.1"

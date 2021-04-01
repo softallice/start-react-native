@@ -5,15 +5,12 @@ import ReactNativePinView from "react-native-pin-view"
 
 import { dispatchGlobalState, GLOBAL_STATE_ACTIONS, getGlobalState } from '../../state/GlobalState';
 
-const ConfirnmPinScreen = (props) => {
+const PinCodeScreen = (props) => {
   const pinView = useRef(null)
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
   const [showCompletedButton, setShowCompletedButton] = useState(false)
-
-  this.state = {
-    savePincode: getGlobalState('pincode')
-  }
+  const confirPin = getGlobalState('pincode')
 
   useEffect(() => {
     if (enteredPin.length > 0) {
@@ -23,10 +20,11 @@ const ConfirnmPinScreen = (props) => {
     }
     if (enteredPin.length === 6) {
       setShowCompletedButton(true)
-      if ( this.state == enteredPin) {
-        this.props.navigation.navigate('Login')
+      if (confirPin == enteredPin ) {
+        props.navigation.navigate('Login')
       } else {
-        alert('핀번호가 다릅니다. 다시 입력해 주세요!')
+        alert('저장된 Pincode와 다릅니다.')
+        pinView.current.clearAll()
       }
     } else {
       setShowCompletedButton(false)
@@ -44,7 +42,7 @@ const ConfirnmPinScreen = (props) => {
               color: "rgba(255,255,255,0.7)",
               fontSize: 24,
             }}>
-            핀코드 6자리
+            핀코드 6자리(확인)
           </Text>
           <ReactNativePinView
             inputSize={32}
@@ -91,4 +89,4 @@ const ConfirnmPinScreen = (props) => {
     </>
   )
 }
-export default ConfirnmPinScreen
+export default PinCodeScreen

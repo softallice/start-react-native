@@ -19,7 +19,7 @@ const PinCodeScreen = (props) => {
     if (enteredPin.length === 6) {
       setShowCompletedButton(true)
       dispatchGlobalState({ type: GLOBAL_STATE_ACTIONS.PINCODE, state: enteredPin })
-      props.props.navigation.navigate('Login')
+      props.navigation.navigate('ConfirmPin')
     } else {
       setShowCompletedButton(false)
     }

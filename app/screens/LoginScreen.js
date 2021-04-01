@@ -156,7 +156,7 @@ class LoginScreen extends React.Component {
                     <Text style={{ color: "#485068" }}>회원 가입 </Text>
                     <TouchableOpacity
                       style={{ marginLeft: "2%" }}
-                      onPress={() => this.props.navigation.navigate("PinCode")}
+                      onPress={() => this.props.navigation.navigate("SignUp")}
                       // onPress={() => this.props.navigation.navigate("SignUp")}
                     >
                       <Text style={{ color: "#347AF0", fontWeight: "700" }}>

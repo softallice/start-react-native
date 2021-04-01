@@ -5,7 +5,8 @@ import AppIntroSlider from "react-native-app-intro-slider";
 
 import Loading from "./app/screens/load/Loading";
 import Main from "./app/Index";
-  
+import WebViewBridge from "./app/WebViewBridge";
+
 export default class APP extends React.Component{
   constructor() {
     super();
@@ -90,13 +91,14 @@ export default class APP extends React.Component{
 
   render() {
     if(this.state.isLoading){
-      return <Loading/>
+      return <Loading/> 
     } else {
       if (this.state.showRealApp) {
         return <App />;
       } else {
         return this.state.isNavigation === true ? (
           <Main />
+          // <WebViewBridge/>
         ) : (
           <AppIntroSlider
             renderItem={this._renderItem}
